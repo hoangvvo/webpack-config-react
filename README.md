@@ -43,7 +43,7 @@ module.exports = (env, argv) => {
 };
 ```
 
-To extend `react-native-bare`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return of `createWebpackConfig`.
+To extend `react-webpack-bare`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return of `createWebpackConfig`.
 
 ```bash
 npm i --save-dev webpack-merge
