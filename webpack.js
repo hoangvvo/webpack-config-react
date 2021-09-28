@@ -3,14 +3,42 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
 const fs = require("fs-extra");
+const { merge } = require("webpack-merge");
 const kleur = require("kleur");
 const defaultOptions = require("./default-config");
 
 const log = (msg) =>
   console.log(`${kleur.bold("[react-webpack-bare]")} ${msg}`);
 
+const error = (msg) => {
+  console.error(`${kleur.bold("[react-webpack-bare]")} ${msg}`);
+  process.exit(1);
+};
+
+function isJSONFile(filePath) {
+  const jsonExts = [".json", "rc"];
+  for (const jsonExt of jsonExts) {
+    if (filePath.endsWith(jsonExt)) return true;
+  }
+  return false;
+}
+
+function getConfig(configFiles) {
+  for (const configFile of configFiles) {
+    const configFilePath = path.resolve(process.cwd(), configFile);
+    if (fs.existsSync(configFilePath)) {
+      return [
+        configFilePath,
+        isJSONFile(configFilePath)
+          ? JSON.parse(fs.readFileSync(configFilePath))
+          : require(configFilePath),
+      ];
+    }
+  }
+}
+
 function getBabelConfig() {
-  const babelConfigFile = [
+  const babelConfig = getConfig([
     ".babelrc",
     ".babelrc.json",
     ".babelrc.js",
@@ -20,15 +48,19 @@ function getBabelConfig() {
     "babel.config.json",
     "babel.config.mjs",
     "babel.config.cjs",
-  ];
-  for (const file of babelConfigFile) {
-    const babelConfigFilePath = path.resolve(process.cwd(), file);
-    if (fs.existsSync(babelConfigFilePath)) {
-      log(`Load babel config from ${babelConfigFilePath}`);
-      return require(babelConfigFilePath);
-    }
+  ]);
+  if (babelConfig) {
+    log(`Load babel config from ${babelConfig[0]}`);
+    return babelConfig[1];
   }
-  throw new Error("[react-webpack-bare] Cannot found babel config file");
+}
+
+function getSwcConfig() {
+  const swcConfig = getConfig([".swcrc"]);
+  if (swcConfig) {
+    log(`Load swc config from ${swcConfig[0]}`);
+    return swcConfig[1];
+  }
 }
 
 const templatePathHtml = path.resolve(__dirname, "./templates/index.html");
@@ -50,16 +82,45 @@ module.exports = (isEnvProduction, configOptions = {}) => {
     pathPublic,
   } = Object.assign(defaultOptions, configOptions);
 
-  const babelOptions = getBabelConfig();
-
   log(
     `Use ${
       isEnvProduction
         ? `${kleur.green("production")}`
         : `${kleur.yellow("development")}`
-    } webpack configuration.
-`
+    } webpack configuration.`
   );
+
+  let loader;
+
+  let babelConfig = getBabelConfig();
+  let swcConfig = !babelConfig ? getSwcConfig() : undefined;
+
+  if (!babelConfig && !swcConfig) {
+    error("Either babel or swc configuration file must be present");
+  }
+
+  if (babelConfig) {
+    if (!isEnvProduction) {
+      babelConfig = merge(babelConfig, {
+        plugins: [require.resolve("react-refresh/babel")],
+      });
+    }
+    loader = [require.resolve("babel-loader"), babelConfig];
+  } else {
+    if (!isEnvProduction) {
+      swcConfig = merge(swcConfig, {
+        jsc: {
+          transform: {
+            react: {
+              development: !isEnvProduction,
+              refresh: true,
+            },
+          },
+        },
+      });
+    }
+    loader = [require.resolve("swc-loader"), swcConfig];
+  }
 
   if (!fs.existsSync(pathHtml)) {
     log(`${pathHtml} is not found. Creating one.`);
@@ -70,12 +131,6 @@ module.exports = (isEnvProduction, configOptions = {}) => {
     log(`${pathEntry} is not found. Creating one.`);
     fs.copySync(templatePathEntry, pathEntry);
   }
-
-  if (!isEnvProduction)
-    babelOptions.plugins = [
-      ...(babelOptions.plugins || []),
-      require.resolve("react-refresh/babel"),
-    ];
 
   return {
     devServer: {
@@ -117,8 +172,8 @@ module.exports = (isEnvProduction, configOptions = {}) => {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           include: path.resolve("./src"),
           exclude: /node_modules/,
-          loader: "babel-loader",
-          options: babelOptions,
+          loader: loader[0],
+          options: loader[1],
         },
       ].filter(Boolean),
     },

@@ -6,17 +6,19 @@ A bare Webpack config to create a react app without [create-react-app](https://g
 
 ## Features
 
-- Does not contain any resolvers. You have to config CSS, images, svg, etc. yourself.
-- Allows custom [Babel config file](https://babeljs.io/docs/en/config-files).
+- Bare minimal. You have the freedom to config CSS, images, svg, etc. yourself.
+- Support both [babel](https://babeljs.io/) and [swc](https://swc.rs/). Allow custom config files.
 - Public folder (`./public`)
 
 ## Installation
 
 ```bash
-npm i --save-dev react-webpack-bare webpack webpack-cli webpack-dev-server @babel/core @babel/preset-env @babel/preset-react
+npm i --save-dev react-webpack-bare webpack webpack-cli webpack-dev-server
 ```
 
 ## Usage
+
+### package.json scripts
 
 Add the following scripts to your `package.json`:
 
@@ -29,16 +31,7 @@ Add the following scripts to your `package.json`:
 }
 ```
 
-Create `babel.config.json` (or [other formats](https://babeljs.io/docs/en/config-files#configuration-file-types))
-
-```json
-{
-  "presets": [
-    ["@babel/preset-env"],
-    ["@babel/preset-react", { "runtime": "automatic" }]
-  ]
-}
-```
+### webpack.config.js
 
 Create `webpack.config.js`:
 
@@ -56,7 +49,58 @@ To extend `react-native-bare`, we can use [webpack-merge](https://github.com/sur
 npm i --save-dev webpack-merge
 ```
 
-See [examples](examples) for some usages such add _Adding TypeScript_, _Using react-native-web_, and others.
+See [examples](examples) for some usages such add [_Adding TypeScript_](examples/typescript), [_Using react-native-web_](examples/react-native-web), and others.
+
+Up next, depending on your preferences and requirements, you may want to either use [babel](https://babeljs.io/) or [swc](https://swc.rs/).
+
+### With babel
+
+[Example](./examples/simple)
+
+Install dependencies:
+
+```bash
+npm i --save-dev @babel/core @babel/preset-env @babel/preset-react babel-loader
+```
+
+Create `babel.config.json` (or [other formats](https://babeljs.io/docs/en/config-files#configuration-file-types))
+
+```json
+{
+  "presets": [
+    ["@babel/preset-env"],
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ]
+}
+```
+
+### With swc
+
+[Example](./examples/swc)
+
+Install dependencies:
+
+```bash
+npm i --save-dev @swc/core swc-loader
+```
+
+Create `.swcrc`:
+
+```json
+{
+  "jsc": {
+    "parser": {
+      "syntax": "ecmascript",
+      "jsx": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  }
+}
+```
 
 ## Configurations
 

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "typescript",
+  "name": "typescript-example",
   "scripts": {
     "build": "webpack --mode=production",
     "dev": "webpack serve --mode=development",
@@ -21,6 +21,7 @@
     "@babel/preset-typescript": "^7.15.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "babel-loader": "^8.2.2",
     "fork-ts-checker-webpack-plugin": "^6.3.3",
     "typescript": "^4.4.3",
     "webpack": "^5.54.0",
