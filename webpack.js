@@ -9,7 +9,7 @@ const defaultOptions = require("./default-config");
 const log = (msg) =>
   console.log(`${kleur.bold("[react-webpack-bare]")} ${msg}`);
 
-async function getBabelConfig() {
+function getBabelConfig() {
   const babelConfigFile = [
     ".babelrc",
     ".babelrc.json",
@@ -40,7 +40,7 @@ const templatePathEntry = path.resolve(__dirname, "./templates/index.js");
  * @param {typeof defaultOptions} options
  * @returns {import('webpack').Configuration}
  */
-module.exports = async (isEnvProduction, configOptions = {}) => {
+module.exports = (isEnvProduction, configOptions = {}) => {
   const {
     shouldUseSourceMap,
     moduleFileExtensions,
@@ -50,7 +50,7 @@ module.exports = async (isEnvProduction, configOptions = {}) => {
     pathPublic,
   } = Object.assign(defaultOptions, configOptions);
 
-  const babelOptions = await getBabelConfig();
+  const babelOptions = getBabelConfig();
 
   log(
     `Use ${

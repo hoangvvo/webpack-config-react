@@ -11,7 +11,7 @@ A bare Webpack config to create a react app without [create-react-app](https://g
 ## Installation
 
 ```bash
-npm i react-webpack-bare webpack webpack-cli webpack-dev-server @babel/core @babel/preset-env @babel/preset-react
+npm i --save-dev react-webpack-bare webpack webpack-cli webpack-dev-server @babel/core @babel/preset-env @babel/preset-react
 ```
 
 ## Usage
@@ -27,16 +27,6 @@ Add the following scripts to your `package.json`:
 }
 ```
 
-Create `webpack.config.js`:
-
-```js
-const createWebpackConfig = require("react-webpack-bare");
-
-module.exports = (env, argv) => {
-  return createWebpackConfig(argv.mode === "production" || env.production);
-};
-```
-
 Create `babel.config.json` (or [other formats](https://babeljs.io/docs/en/config-files#configuration-file-types))
 
 ```json
@@ -48,11 +38,23 @@ Create `babel.config.json` (or [other formats](https://babeljs.io/docs/en/config
 }
 ```
 
-Run:
+Create `webpack.config.js`:
+
+```js
+const createWebpackConfig = require("react-webpack-bare");
+
+module.exports = (env, argv) => {
+  return createWebpackConfig(argv.mode === "production" || env.production);
+};
+```
+
+To extend `react-native-bare`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return of `createWebpackConfig`.
 
 ```bash
-npm run dev
+npm i --save-dev webpack-merge
 ```
+
+See [examples](examples) for some usages such add _Adding TypeScript_, _Using react-native-web_, and others.
 
 ## Configurations
 
@@ -68,50 +70,3 @@ createWebpackConfig(true, options);
 - `pathHtml`: Path to HTML file. Default: `./public/index.html`.
 - `pathBuild`: Path to build output directory. Default: `./build`.
 - `pathPublic`: Path to "public" folder (will be copied to build directory). Default: `./public`.
-
-## Extensions
-
-<details>
-<summary>Adding TypeScript</summary>
-
-Create `tsconfig.json`:
-
-```json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve"
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules"]
-}
-```
-
-Switch all file extensions to `.ts`, `.tsx`.
-
-Install `@babel/preset-typescript`.
-
-```bash
-npm install --save-dev @babel/preset-typescript
-```
-
-Add to `babel.config.json`:
-
-```json
-{
-  "presets": ["@babel/preset-typescript"]
-}
-```
-
-</details>

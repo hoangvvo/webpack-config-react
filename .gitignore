@@ -105,4 +105,4 @@ dist
 
 build
 
-test/package-lock.json
+examples/**/package-lock.json
