@@ -1,6 +1,8 @@
 # react-webpack-bare
 
-A bare Webpack config to create a react app without [create-react-app](https://github.com/facebook/create-react-app).
+A bare Webpack config to create a react app without [create-react-app](https://github.com/facebook/create-react-app). Not battery included!
+
+**Note:** This package is only for those who are experienced with Web development since it comes with **no configuration** out of the box. For better dx and production readiness, you may want to stick with [create-react-app](https://github.com/facebook/create-react-app) or use [Next.js](https://nextjs.org/).
 
 ## Features
 
