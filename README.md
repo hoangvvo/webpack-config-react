@@ -36,16 +36,16 @@ Add the following scripts to your `package.json`:
 Create `webpack.config.js`:
 
 ```js
-const createWebpackConfig = require("webpack-react-config");
+const { createConfig } = require("webpack-react-config");
 
 module.exports = async (env, argv) => {
-  const webpackConfig = await createWebpackConfig(
+  const webpackConfig = await createConfig(
     argv.mode === "production" || env.production
   );
 };
 ```
 
-To extend `webpack-react-config`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return of `await createWebpackConfig()`.
+To extend `webpack-react-config`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return value of `await createConfig()`.
 
 ```bash
 npm i --save-dev webpack-merge
@@ -106,10 +106,10 @@ Create `.swcrc`:
 
 ## Configurations
 
-An options param can passed as the second argument to `createWebpackConfig`.
+An options param can passed as the second argument to `createConfig`.
 
 ```js
-createWebpackConfig(process.env.NODE_ENV === "production", options);
+createConfig(isEnvProduction, options);
 ```
 
 - `shouldUseSourceMap`: Whether to enable source map in production. Default: `true`.

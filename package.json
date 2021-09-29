@@ -13,10 +13,9 @@
   },
   "license": "ISC",
   "author": "",
-  "main": "webpack.js",
+  "main": "src/webpack.js",
   "files": [
-    "default-config.js",
-    "templates"
+    "src"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

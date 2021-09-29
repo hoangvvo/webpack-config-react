@@ -7,6 +7,9 @@ const { merge } = require("webpack-merge");
 const kleur = require("kleur");
 const defaultOptions = require("./default-config");
 
+const resolveModule = (id) => require.resolve(id);
+const importModule = (id) => require(id);
+
 const log = (msg) =>
   console.log(`${kleur.bold("[webpack-react-config]")} ${msg}`);
 
@@ -15,15 +18,15 @@ const error = (msg) => {
   process.exit(1);
 };
 
-function isJSONFile(filePath) {
+const isJSONFile = (filePath) => {
   const jsonExts = [".json", "rc"];
   for (const jsonExt of jsonExts) {
     if (filePath.endsWith(jsonExt)) return true;
   }
   return false;
-}
+};
 
-function getConfig(configFiles) {
+const getConfig = (configFiles) => {
   for (const configFile of configFiles) {
     const configFilePath = path.resolve(process.cwd(), configFile);
     if (fs.existsSync(configFilePath)) {
@@ -31,13 +34,13 @@ function getConfig(configFiles) {
         configFilePath,
         isJSONFile(configFilePath)
           ? JSON.parse(fs.readFileSync(configFilePath))
-          : require(configFilePath),
+          : resolveModule(configFilePath),
       ];
     }
   }
-}
+};
 
-function getBabelConfig() {
+const getBabelConfig = () => {
   const babelConfig = getConfig([
     ".babelrc",
     ".babelrc.json",
@@ -53,15 +56,15 @@ function getBabelConfig() {
     log(`Load babel config from ${babelConfig[0]}`);
     return babelConfig[1];
   }
-}
+};
 
-function getSwcConfig() {
+const getSwcConfig = () => {
   const swcConfig = getConfig([".swcrc"]);
   if (swcConfig) {
     log(`Load swc config from ${swcConfig[0]}`);
     return swcConfig[1];
   }
-}
+};
 
 const templatePathHtml = path.resolve(__dirname, "./templates/index.html");
 const templatePathEntry = path.resolve(__dirname, "./templates/index.js");
@@ -72,7 +75,7 @@ const templatePathEntry = path.resolve(__dirname, "./templates/index.js");
  * @param {typeof defaultOptions} options
  * @returns {import('webpack').Configuration}
  */
-module.exports = async (isEnvProduction, configOptions = {}) => {
+module.exports.createConfig = async (isEnvProduction, options) => {
   const {
     shouldUseSourceMap,
     moduleFileExtensions,
@@ -80,7 +83,7 @@ module.exports = async (isEnvProduction, configOptions = {}) => {
     pathBuild,
     pathEntry,
     pathPublic,
-  } = Object.assign(defaultOptions, configOptions);
+  } = Object.assign(defaultOptions, options);
 
   log(
     `Use ${
@@ -102,10 +105,10 @@ module.exports = async (isEnvProduction, configOptions = {}) => {
   if (babelConfig) {
     if (!isEnvProduction) {
       babelConfig = merge(babelConfig, {
-        plugins: [require.resolve("react-refresh/babel")],
+        plugins: [resolveModule("react-refresh/babel")],
       });
     }
-    loader = [require.resolve("babel-loader"), babelConfig];
+    loader = [resolveModule("babel-loader"), babelConfig];
   } else {
     if (!isEnvProduction) {
       swcConfig = merge(swcConfig, {
@@ -119,7 +122,7 @@ module.exports = async (isEnvProduction, configOptions = {}) => {
         },
       });
     }
-    loader = [require.resolve("swc-loader"), swcConfig];
+    loader = [resolveModule("swc-loader"), swcConfig];
   }
 
   if (!fs.existsSync(pathHtml)) {

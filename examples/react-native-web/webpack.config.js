@@ -1,4 +1,4 @@
-const createWebpackConfig = require("webpack-react-config");
+const { createConfig } = require("webpack-react-config");
 const { merge } = require("webpack-merge");
 
 // This is needed for webpack to import static images in JavaScript files.
@@ -14,7 +14,7 @@ const imageLoaderConfiguration = {
 };
 
 module.exports = async (env, argv) => {
-  const webpackConfig = await createWebpackConfig(
+  const webpackConfig = await createConfig(
     argv.mode === "production" || env.production
   );
   return merge(webpackConfig, {
