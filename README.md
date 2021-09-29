@@ -42,6 +42,7 @@ module.exports = async (env, argv) => {
   const webpackConfig = await createConfig(
     argv.mode === "production" || env.production
   );
+  return webpackConfig;
 };
 ```
 
@@ -115,6 +116,7 @@ createConfig(isEnvProduction, options);
 - `shouldUseSourceMap`: Whether to enable source map in production. Default: `true`.
 - `moduleFileExtensions`: A list of module file extension to resolve. Default: `["web.mjs","mjs","web.js","js","web.ts","ts","web.tsx","tsx","json","web.jsx","jsx"]`.
 - `pathEntry`: Path to entry file. Default: `./src/index.js`.
+- `pathSrc`: Path to src directory (will be proccessed by babel-loader/swc-loader). Default: `./src`.
 - `pathHtml`: Path to HTML file. Default: `./public/index.html`.
 - `pathBuild`: Path to build output directory. Default: `./build`.
 - `pathPublic`: Path to "public" folder (will be copied to build directory). Default: `./public`.

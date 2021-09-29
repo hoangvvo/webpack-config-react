@@ -10,6 +10,7 @@ import dirnameCompat from "./dirname.cjs";
 
 const { _dirname } = dirnameCompat;
 const { merge } = webpackMerge;
+const appDirectory = fs.realpathSync(process.cwd());
 
 const log = (msg) =>
   console.log(`${kleur.bold("[webpack-react-config]")} ${msg}`);
@@ -32,7 +33,6 @@ const resolveNode = (filePath) => {
   return resolveApp(`${filePath}.js`);
 };
 
-const appDirectory = fs.realpathSync(process.cwd());
 const moduleFileExtensions = [
   "web.mjs",
   "mjs",
@@ -54,6 +54,7 @@ const defaultOptions = {
   pathBuild: resolveApp("build"),
   pathPublic: resolveApp("public"),
   pathEntry: resolveNode("./src/index"),
+  pathSrc: resolveApp("src"),
 };
 
 const isJSONFile = (filePath) => {
@@ -119,6 +120,7 @@ export const createConfig = async (isEnvProduction, options) => {
     moduleFileExtensions,
     pathHtml,
     pathBuild,
+    pathSrc,
     pathEntry,
     pathPublic,
   } = Object.assign(defaultOptions, options);
@@ -177,6 +179,7 @@ export const createConfig = async (isEnvProduction, options) => {
     devServer: {
       hot: true,
       static: { directory: pathPublic },
+      historyApiFallback: true,
     },
     entry: pathEntry,
     mode: isEnvProduction ? "production" : "development",
@@ -188,6 +191,7 @@ export const createConfig = async (isEnvProduction, options) => {
       : "cheap-module-source-map",
     output: {
       path: pathBuild,
+      publicPath: "/",
       pathinfo: !isEnvProduction,
       filename: "static/js/[name].[contenthash].js",
       chunkFilename: "static/js/[name].[contenthash].chunk.js",
@@ -199,19 +203,19 @@ export const createConfig = async (isEnvProduction, options) => {
     },
     module: {
       rules: [
+        {
+          test: /\.(js|mjs|jsx|ts|tsx)$/,
+          include: [pathSrc],
+          exclude: /node_modules/,
+          loader: loader[0],
+          options: loader[1],
+        },
         // Handle node_modules packages that contain sourcemaps
         (shouldUseSourceMap || !isEnvProduction) && {
           enforce: "pre",
           exclude: /@babel(?:\/|\\{1,2})runtime/,
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
           use: "source-map-loader",
-        },
-        {
-          test: /\.(js|mjs|jsx|ts|tsx)$/,
-          include: path.resolve("./src"),
-          exclude: /node_modules/,
-          loader: loader[0],
-          options: loader[1],
         },
       ].filter(Boolean),
     },
