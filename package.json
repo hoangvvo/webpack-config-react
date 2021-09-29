@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "description": "A bare, minimal of React Web App with Webpack without any configuration",
+  "keywords": [
+    "react",
+    "webpack",
+    "minimal"
+  ],
   "module": "dist/webpack.mjs",
   "main": "dist/webpack.js",
   "exports": {
@@ -19,7 +24,7 @@
     "type": "git",
     "url": "git+https://github.com/hoangvvo/webpack-config-react.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "author": "",
   "files": [
     "dist"
