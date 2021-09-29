@@ -13,10 +13,10 @@ const { merge } = webpackMerge;
 const appDirectory = fs.realpathSync(process.cwd());
 
 const log = (msg) =>
-  console.log(`${kleur.bold("[webpack-react-config]")} ${msg}`);
+  console.log(`${kleur.bold("[webpack-config-react]")} ${msg}`);
 
 const error = (msg) => {
-  console.error(`${kleur.bold("[webpack-react-config]")} ${msg}`);
+  console.error(`${kleur.bold("[webpack-config-react]")} ${msg}`);
   process.exit(1);
 };
 

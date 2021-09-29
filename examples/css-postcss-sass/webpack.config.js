@@ -1,4 +1,4 @@
-const { createConfig } = require("webpack-react-config");
+const { createConfig } = require("webpack-config-react");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { merge } = require("webpack-merge");
 

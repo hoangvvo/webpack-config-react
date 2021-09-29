@@ -1,20 +1,20 @@
-# webpack-react-config
+# webpack-config-react
 
 A bare, modern Webpack 5 config to create a react app without [create-react-app](https://github.com/facebook/create-react-app). Not battery included!
 
-**Note:** This package is only for those who are experienced with web bundling, transpilation (eg. `@babel/preset-env`), optimization, since it comes with **no opinionated configuration** out of the box. If you are a beginner, you may want to stick with [create-react-app](https://github.com/facebook/create-react-app) or use [Next.js](https://nextjs.org/).
+**Note:** This package is only for those who are experienced with web bundling, transpilation (eg. `@babel/preset-env`), optimization, since it comes with **no opinionated configuration** out of the box. If you are a beginner, it's better to stick with [create-react-app](https://github.com/facebook/create-react-app) or use [Next.js](https://nextjs.org/).
 
 ## Features
 
-- Freedom to config CSS, images, svg, etc. yourself. (eg. Use the new [Asset Modules](https://webpack.js.org/guides/asset-modules/))
+- Freedom to config CSS, images, svg, etc. (eg. Use the new [Asset Modules](https://webpack.js.org/guides/asset-modules/))
 - Support both [babel](https://babeljs.io/) and [swc](https://swc.rs/). Allow custom config files.
 - Public folder (`./public`)
-- [Examples](./examples) to incrementally add back features like [CSS, PostCSS, SASS, Modules](./css-postcss-sass) or [TypeScript](./typescript).
+- [Examples](./examples) to incrementally add back features like [CSS, PostCSS, SASS, Modules](./examples/css-postcss-sass) or [TypeScript](./examples/typescript).
 
 ## Installation
 
 ```bash
-npm i --save-dev webpack-react-config webpack webpack-cli webpack-dev-server
+npm i --save-dev webpack-config-react webpack webpack-cli webpack-dev-server
 ```
 
 ## Usage
@@ -37,7 +37,7 @@ Add the following scripts to your `package.json`:
 Create `webpack.config.js`:
 
 ```js
-const { createConfig } = require("webpack-react-config");
+const { createConfig } = require("webpack-config-react");
 
 module.exports = async (env, argv) => {
   const webpackConfig = await createConfig(
@@ -47,7 +47,7 @@ module.exports = async (env, argv) => {
 };
 ```
 
-To extend `webpack-react-config`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return value of `await createConfig()`.
+To extend `webpack-config-react`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return value of `await createConfig()`.
 
 ```bash
 npm i --save-dev webpack-merge
@@ -55,7 +55,7 @@ npm i --save-dev webpack-merge
 
 See [examples](examples) for some usages.
 
-Up next, depending on your preferences and requirements, you may want to either use [babel](https://babeljs.io/) or [swc](https://swc.rs/).
+Up next, depending on your preferences and requirements, we can either use [babel](https://babeljs.io/) or [swc](https://swc.rs/).
 
 ### With babel
 

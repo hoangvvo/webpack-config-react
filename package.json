@@ -1,5 +1,5 @@
 {
-  "name": "webpack-react-config",
+  "name": "webpack-config-react",
   "version": "0.0.1",
   "private": true,
   "description": "A bare, minimal of React Web App with Webpack without any configuration",
@@ -11,13 +11,13 @@
       "import": "./dist/webpack.mjs"
     }
   },
-  "homepage": "https://github.com/hoangvvo/webpack-react-config#readme",
+  "homepage": "https://github.com/hoangvvo/webpack-config-react#readme",
   "bugs": {
-    "url": "https://github.com/hoangvvo/webpack-react-config/issues"
+    "url": "https://github.com/hoangvvo/webpack-config-react/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hoangvvo/webpack-react-config.git"
+    "url": "git+https://github.com/hoangvvo/webpack-config-react.git"
   },
   "license": "ISC",
   "author": "",
