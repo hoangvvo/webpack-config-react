@@ -44,11 +44,17 @@
     "kleur": "^4.1.4"
   },
   "peerDependencies": {
-    "webpack": "^5.0.0"
-  },
-  "optionalDependencies": {
+    "webpack": "^5.0.0",
     "babel-loader": "^8.2.2",
     "swc-loader": "^0.1.15"
+  },
+  "peerDependenciesMeta": {
+    "babel-loader": {
+      "optional": true
+    },
+    "swc-loader": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=10.13.0"
