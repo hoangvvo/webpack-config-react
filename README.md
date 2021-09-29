@@ -2,13 +2,14 @@
 
 A bare, modern Webpack 5 config to create a react app without [create-react-app](https://github.com/facebook/create-react-app). Not battery included!
 
-**Note:** This package is only for those who are experienced with web bundling, transpilation since it comes with **no opinionated configuration** out of the box. For better dx and production readiness, you may want to stick with [create-react-app](https://github.com/facebook/create-react-app) or use [Next.js](https://nextjs.org/).
+**Note:** This package is only for those who are experienced with web bundling, transpilation (eg. `@babel/preset-env`), optimization, since it comes with **no opinionated configuration** out of the box. If you are a beginner, you may want to stick with [create-react-app](https://github.com/facebook/create-react-app) or use [Next.js](https://nextjs.org/).
 
 ## Features
 
-- Bare minimal. You have the freedom to config CSS, images, svg, etc. yourself. (eg. Use the new [Asset Modules](https://webpack.js.org/guides/asset-modules/))
+- Freedom to config CSS, images, svg, etc. yourself. (eg. Use the new [Asset Modules](https://webpack.js.org/guides/asset-modules/))
 - Support both [babel](https://babeljs.io/) and [swc](https://swc.rs/). Allow custom config files.
 - Public folder (`./public`)
+- [Examples](./examples) to incrementally add back features like [CSS, PostCSS, SASS, Modules](./css-postcss-sass) or [TypeScript](./typescript).
 
 ## Installation
 
@@ -52,7 +53,7 @@ To extend `webpack-react-config`, we can use [webpack-merge](https://github.com/
 npm i --save-dev webpack-merge
 ```
 
-See [examples](examples) for some usages such add [_Adding TypeScript_](examples/typescript), [_Using react-native-web_](examples/react-native-web), and others.
+See [examples](examples) for some usages.
 
 Up next, depending on your preferences and requirements, you may want to either use [babel](https://babeljs.io/) or [swc](https://swc.rs/).
 
