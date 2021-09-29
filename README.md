@@ -6,7 +6,7 @@ A bare, modern Webpack 5 config to create a react app without [create-react-app]
 
 ## Features
 
-- Bare minimal. You have the freedom to config CSS, images, svg, etc. yourself.
+- Bare minimal. You have the freedom to config CSS, images, svg, etc. yourself. (eg. Use the new [Asset Modules](https://webpack.js.org/guides/asset-modules/))
 - Support both [babel](https://babeljs.io/) and [swc](https://swc.rs/). Allow custom config files.
 - Public folder (`./public`)
 

@@ -151,12 +151,9 @@ module.exports.createConfig = async (isEnvProduction, options) => {
     output: {
       path: pathBuild,
       pathinfo: !isEnvProduction,
-      filename: isEnvProduction
-        ? "static/js/[name].[contenthash].js"
-        : "static/js/bundle.js",
-      chunkFilename: isEnvProduction
-        ? "static/js/[name].[contenthash].chunk.js"
-        : "static/js/[name].chunk.js",
+      filename: "static/js/[name].[contenthash].js",
+      chunkFilename: "static/js/[name].[contenthash].chunk.js",
+      assetModuleFilename: "static/media/[hash][ext][query]",
     },
     resolve: {
       modules: [path.resolve("node_modules"), "node_modules"],
