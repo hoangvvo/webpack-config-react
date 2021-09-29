@@ -34,7 +34,7 @@ const getConfig = (configFiles) => {
         configFilePath,
         isJSONFile(configFilePath)
           ? JSON.parse(fs.readFileSync(configFilePath))
-          : resolveModule(configFilePath),
+          : importModule(configFilePath),
       ];
     }
   }
