@@ -32,6 +32,18 @@ Add the following scripts to your `package.json`:
 }
 ```
 
+To serve the built app, you can use [sirv-cli](https://www.npmjs.com/package/sirv-cli):
+
+```json
+{
+  "scripts": {
+    "start": "sirv build"
+  }
+}
+```
+
+[Create React App Deployment article](https://create-react-app.dev/docs/deployment) also helps since this config also outputs file to `build` (by defaults).
+
 ### webpack.config.js
 
 Create `webpack.config.js`:
