@@ -1,14 +1,12 @@
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
-const path = require("path");
-const fs = require("fs-extra");
-const { merge } = require("webpack-merge");
-const kleur = require("kleur");
-const defaultOptions = require("./default-config");
-
-const resolveModule = (id) => require.resolve(id);
-const importModule = (id) => require(id);
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
+import fs from "fs-extra";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import kleur from "kleur";
+import { createRequire } from "module";
+import path from "path";
+import { merge } from "webpack-merge";
+import { _dirname } from "../__dirname.js";
 
 const log = (msg) =>
   console.log(`${kleur.bold("[webpack-react-config]")} ${msg}`);
@@ -16,6 +14,43 @@ const log = (msg) =>
 const error = (msg) => {
   console.error(`${kleur.bold("[webpack-react-config]")} ${msg}`);
   process.exit(1);
+};
+
+const __require = createRequire(_dirname);
+const importModule = (id) => __require(id);
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
+const resolveNode = (filePath) => {
+  const extension = moduleFileExtensions.find((extension) =>
+    fs.existsSync(resolveApp(`${filePath}.${extension}`))
+  );
+  if (extension) {
+    return resolveApp(`${filePath}.${extension}`);
+  }
+  return resolveApp(`${filePath}.js`);
+};
+
+const appDirectory = fs.realpathSync(process.cwd());
+const moduleFileExtensions = [
+  "web.mjs",
+  "mjs",
+  "web.js",
+  "js",
+  "web.ts",
+  "ts",
+  "web.tsx",
+  "tsx",
+  "json",
+  "web.jsx",
+  "jsx",
+];
+
+const defaultOptions = {
+  shouldUseSourceMap: true,
+  moduleFileExtensions,
+  pathHtml: resolveApp("./public/index.html"),
+  pathBuild: resolveApp("build"),
+  pathPublic: resolveApp("public"),
+  pathEntry: resolveNode("./src/index"),
 };
 
 const isJSONFile = (filePath) => {
@@ -28,7 +63,7 @@ const isJSONFile = (filePath) => {
 
 const getConfig = (configFiles) => {
   for (const configFile of configFiles) {
-    const configFilePath = path.resolve(process.cwd(), configFile);
+    const configFilePath = path.resolve(appDirectory, configFile);
     if (fs.existsSync(configFilePath)) {
       return [
         configFilePath,
@@ -66,8 +101,8 @@ const getSwcConfig = () => {
   }
 };
 
-const templatePathHtml = path.resolve(__dirname, "./templates/index.html");
-const templatePathEntry = path.resolve(__dirname, "./templates/index.js");
+const templatePathHtml = path.resolve(_dirname, "./templates/index.html");
+const templatePathEntry = path.resolve(_dirname, "./templates/index.js");
 
 /**
  *
@@ -75,7 +110,7 @@ const templatePathEntry = path.resolve(__dirname, "./templates/index.js");
  * @param {typeof defaultOptions} options
  * @returns {import('webpack').Configuration}
  */
-module.exports.createConfig = async (isEnvProduction, options) => {
+export const createConfig = async (isEnvProduction, options) => {
   const {
     shouldUseSourceMap,
     moduleFileExtensions,
@@ -105,10 +140,10 @@ module.exports.createConfig = async (isEnvProduction, options) => {
   if (babelConfig) {
     if (!isEnvProduction) {
       babelConfig = merge(babelConfig, {
-        plugins: [resolveModule("react-refresh/babel")],
+        plugins: ["react-refresh/babel"],
       });
     }
-    loader = [resolveModule("babel-loader"), babelConfig];
+    loader = ["babel-loader", babelConfig];
   } else {
     if (!isEnvProduction) {
       swcConfig = merge(swcConfig, {
@@ -122,7 +157,7 @@ module.exports.createConfig = async (isEnvProduction, options) => {
         },
       });
     }
-    loader = [resolveModule("swc-loader"), swcConfig];
+    loader = ["swc-loader", swcConfig];
   }
 
   if (!fs.existsSync(pathHtml)) {

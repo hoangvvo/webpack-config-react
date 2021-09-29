@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "description": "A bare, minimal of React Web App with Webpack without any configuration",
+  "module": "dist/webpack.mjs",
+  "main": "dist/webpack.js",
+  "exports": {
+    ".": {
+      "require": "./dist/webpack.js",
+      "import": "./dist/webpack.mjs"
+    }
+  },
   "homepage": "https://github.com/hoangvvo/webpack-react-config#readme",
   "bugs": {
     "url": "https://github.com/hoangvvo/webpack-react-config/issues"
@@ -13,12 +21,15 @@
   },
   "license": "ISC",
   "author": "",
-  "main": "src/webpack.js",
   "files": [
-    "src"
+    "dist",
+    "__dirname.js"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "bundt"
+  },
+  "modes": {
+    "default": "src/webpack.js"
   },
   "dependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
@@ -29,6 +40,7 @@
     "webpack-merge": "^5.8.0"
   },
   "devDependencies": {
+    "bundt": "^1.1.5",
     "fs-extra": "^10.0.0",
     "kleur": "^4.1.4"
   },
@@ -38,5 +50,8 @@
   "optionalDependencies": {
     "babel-loader": "^8.2.2",
     "swc-loader": "^0.1.15"
+  },
+  "engines": {
+    "node": ">=10.13.0"
   }
 }
