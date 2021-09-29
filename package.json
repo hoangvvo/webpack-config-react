@@ -22,11 +22,10 @@
   "license": "ISC",
   "author": "",
   "files": [
-    "dist",
-    "__dirname.js"
+    "dist"
   ],
   "scripts": {
-    "build": "bundt"
+    "build": "bundt && cp src/dirname.cjs dist/dirname.cjs"
   },
   "modes": {
     "default": "src/webpack.js"

@@ -6,7 +6,9 @@ import kleur from "kleur";
 import { createRequire } from "module";
 import path from "path";
 import { merge } from "webpack-merge";
-import { _dirname } from "../dirname.cjs";
+import dirnameCompat from "./dirname.cjs";
+
+const { _dirname } = dirnameCompat;
 
 const log = (msg) =>
   console.log(`${kleur.bold("[webpack-react-config]")} ${msg}`);
