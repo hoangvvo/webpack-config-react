@@ -1,8 +1,7 @@
 {
   "name": "webpack-config-react",
   "version": "0.0.1",
-  "private": true,
-  "description": "A bare, minimal of React Web App with Webpack without any configuration",
+  "description": "A bare, modern Webpack 5 config to create a react app without create-react-app. Not battery included!",
   "keywords": [
     "react",
     "webpack",
@@ -40,8 +39,7 @@
     "copy-webpack-plugin": "^9.0.1",
     "html-webpack-plugin": "^5.3.2",
     "react-refresh": "^0.10.0",
-    "source-map-loader": "^3.0.0",
-    "webpack-merge": "^5.8.0"
+    "source-map-loader": "^3.0.0"
   },
   "devDependencies": {
     "bundt": "^1.1.5",
@@ -49,9 +47,9 @@
     "kleur": "^4.1.4"
   },
   "peerDependencies": {
-    "webpack": "^5.0.0",
     "babel-loader": "^8.2.2",
-    "swc-loader": "^0.1.15"
+    "swc-loader": "^0.1.15",
+    "webpack": "^5.0.0"
   },
   "peerDependenciesMeta": {
     "babel-loader": {
