@@ -1,6 +1,6 @@
 {
   "name": "webpack-config-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A bare, modern Webpack 5 config to create a react app without create-react-app. Not battery included!",
   "keywords": [
     "react",
