@@ -2,7 +2,7 @@ const createWebpackConfig = require("react-webpack-bare");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const { merge } = require("webpack-merge");
 
-module.exports = (env, argv) => {
+module.exports = async (env, argv) => {
   const webpackConfig = createWebpackConfig(
     argv.mode === "production" || env.production
   );

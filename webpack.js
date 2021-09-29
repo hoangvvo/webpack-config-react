@@ -72,7 +72,7 @@ const templatePathEntry = path.resolve(__dirname, "./templates/index.js");
  * @param {typeof defaultOptions} options
  * @returns {import('webpack').Configuration}
  */
-module.exports = (isEnvProduction, configOptions = {}) => {
+module.exports = async (isEnvProduction, configOptions = {}) => {
   const {
     shouldUseSourceMap,
     moduleFileExtensions,

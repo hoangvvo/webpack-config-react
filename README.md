@@ -38,12 +38,14 @@ Create `webpack.config.js`:
 ```js
 const createWebpackConfig = require("react-webpack-bare");
 
-module.exports = (env, argv) => {
-  return createWebpackConfig(argv.mode === "production" || env.production);
+module.exports = async (env, argv) => {
+  const webpackConfig = await createWebpackConfig(
+    argv.mode === "production" || env.production
+  );
 };
 ```
 
-To extend `react-webpack-bare`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return of `createWebpackConfig`.
+To extend `react-webpack-bare`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return of `await createWebpackConfig()`.
 
 ```bash
 npm i --save-dev webpack-merge
@@ -107,7 +109,7 @@ Create `.swcrc`:
 An options param can passed as the second argument to `createWebpackConfig`.
 
 ```js
-createWebpackConfig(true, options);
+createWebpackConfig(process.env.NODE_ENV === "production", options);
 ```
 
 - `shouldUseSourceMap`: Whether to enable source map in production. Default: `true`.

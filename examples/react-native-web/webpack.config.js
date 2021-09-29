@@ -13,8 +13,8 @@ const imageLoaderConfiguration = {
   },
 };
 
-module.exports = (env, argv) => {
-  const webpackConfig = createWebpackConfig(
+module.exports = async (env, argv) => {
+  const webpackConfig = await createWebpackConfig(
     argv.mode === "production" || env.production
   );
   return merge(webpackConfig, {
