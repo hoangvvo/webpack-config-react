@@ -1,4 +1,4 @@
-const createWebpackConfig = require("react-webpack-bare");
+const createWebpackConfig = require("webpack-react-config");
 const { merge } = require("webpack-merge");
 
 // This is needed for webpack to import static images in JavaScript files.

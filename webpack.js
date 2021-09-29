@@ -8,10 +8,10 @@ const kleur = require("kleur");
 const defaultOptions = require("./default-config");
 
 const log = (msg) =>
-  console.log(`${kleur.bold("[react-webpack-bare]")} ${msg}`);
+  console.log(`${kleur.bold("[webpack-react-config]")} ${msg}`);
 
 const error = (msg) => {
-  console.error(`${kleur.bold("[react-webpack-bare]")} ${msg}`);
+  console.error(`${kleur.bold("[webpack-react-config]")} ${msg}`);
   process.exit(1);
 };
 

@@ -1,4 +1,4 @@
-const createWebpackConfig = require("react-webpack-bare");
+const createWebpackConfig = require("webpack-react-config");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const { merge } = require("webpack-merge");
 

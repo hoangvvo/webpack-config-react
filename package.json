@@ -1,15 +1,15 @@
 {
-  "name": "react-webpack-bare",
+  "name": "webpack-react-config",
   "version": "0.0.1",
   "private": true,
   "description": "A bare, minimal of React Web App with Webpack without any configuration",
-  "homepage": "https://github.com/hoangvvo/react-webpack-bare#readme",
+  "homepage": "https://github.com/hoangvvo/webpack-react-config#readme",
   "bugs": {
-    "url": "https://github.com/hoangvvo/react-webpack-bare/issues"
+    "url": "https://github.com/hoangvvo/webpack-react-config/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hoangvvo/react-webpack-bare.git"
+    "url": "git+https://github.com/hoangvvo/webpack-react-config.git"
   },
   "license": "ISC",
   "author": "",

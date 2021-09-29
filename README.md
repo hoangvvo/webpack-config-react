@@ -1,4 +1,4 @@
-# react-webpack-bare
+# webpack-react-config
 
 A bare Webpack config to create a react app without [create-react-app](https://github.com/facebook/create-react-app). Not battery included!
 
@@ -13,7 +13,7 @@ A bare Webpack config to create a react app without [create-react-app](https://g
 ## Installation
 
 ```bash
-npm i --save-dev react-webpack-bare webpack webpack-cli webpack-dev-server
+npm i --save-dev webpack-react-config webpack webpack-cli webpack-dev-server
 ```
 
 ## Usage
@@ -36,7 +36,7 @@ Add the following scripts to your `package.json`:
 Create `webpack.config.js`:
 
 ```js
-const createWebpackConfig = require("react-webpack-bare");
+const createWebpackConfig = require("webpack-react-config");
 
 module.exports = async (env, argv) => {
   const webpackConfig = await createWebpackConfig(
@@ -45,7 +45,7 @@ module.exports = async (env, argv) => {
 };
 ```
 
-To extend `react-webpack-bare`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return of `await createWebpackConfig()`.
+To extend `webpack-react-config`, we can use [webpack-merge](https://github.com/survivejs/webpack-merge) to merge additional configs into the return of `await createWebpackConfig()`.
 
 ```bash
 npm i --save-dev webpack-merge
