@@ -5,10 +5,11 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import kleur from "kleur";
 import { createRequire } from "module";
 import path from "path";
-import { merge } from "webpack-merge";
+import webpackMerge from "webpack-merge";
 import dirnameCompat from "./dirname.cjs";
 
 const { _dirname } = dirnameCompat;
+const { merge } = webpackMerge;
 
 const log = (msg) =>
   console.log(`${kleur.bold("[webpack-react-config]")} ${msg}`);
