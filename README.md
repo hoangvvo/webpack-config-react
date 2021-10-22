@@ -118,6 +118,37 @@ Create `.swcrc`:
 }
 ```
 
+## Recommended Configs
+
+Aiming to be simple, this does not include configs that are helpful to development. The following shows how to re-enable them.
+
+<details>
+<summary>Source map</summary>
+
+[source-map-loader](https://webpack.js.org/loaders/source-map-loader/)
+
+```js
+module.exports = async (env, argv) => {
+  const isEnvProduction = argv.mode === "production" || env.production;
+  const webpackConfig = await createConfig(isEnvProduction);
+  return merge(webpackConfig, {
+    devtool: isEnvProduction ? "source-map" : "eval-source-map",
+    module: {
+      rules: [
+        {
+          test: /\.(js|mjs|jsx|ts|tsx|css)$/,
+          exclude: /@babel(?:\/|\\{1,2})runtime/,
+          enforce: "pre",
+          use: ["source-map-loader"],
+        },
+      ],
+    },
+  });
+};
+```
+
+</details>
+
 ## Configurations
 
 An options param can passed as the second argument to `createConfig`.
@@ -126,7 +157,6 @@ An options param can passed as the second argument to `createConfig`.
 createConfig(isEnvProduction, options);
 ```
 
-- `shouldUseSourceMap`: Whether to enable source map in production. Default: `true`.
 - `moduleFileExtensions`: A list of module file extension to resolve. Default: `["web.mjs","mjs","web.js","js","web.ts","ts","web.tsx","tsx","json","web.jsx","jsx"]`.
 - `pathEntry`: Path to entry file. Default: `./src/index.js`.
 - `pathSrc`: Path to src directory (will be proccessed by babel-loader/swc-loader). Default: `./src`.

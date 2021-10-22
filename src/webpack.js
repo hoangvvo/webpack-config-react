@@ -48,7 +48,6 @@ const moduleFileExtensions = [
 ];
 
 const defaultOptions = {
-  shouldUseSourceMap: true,
   moduleFileExtensions,
   pathHtml: resolveApp("./public/index.html"),
   pathBuild: resolveApp("build"),
@@ -116,7 +115,6 @@ const templatePathEntry = path.resolve(_dirname, "./templates/index.js");
  */
 export const createConfig = async (isEnvProduction, options) => {
   const {
-    shouldUseSourceMap,
     moduleFileExtensions,
     pathHtml,
     pathBuild,
@@ -184,11 +182,6 @@ export const createConfig = async (isEnvProduction, options) => {
     entry: pathEntry,
     mode: isEnvProduction ? "production" : "development",
     bail: isEnvProduction,
-    devtool: isEnvProduction
-      ? shouldUseSourceMap
-        ? "source-map"
-        : false
-      : "cheap-module-source-map",
     output: {
       path: pathBuild,
       publicPath: "/",
@@ -210,14 +203,7 @@ export const createConfig = async (isEnvProduction, options) => {
           loader: loader[0],
           options: loader[1],
         },
-        // Handle node_modules packages that contain sourcemaps
-        (shouldUseSourceMap || !isEnvProduction) && {
-          enforce: "pre",
-          exclude: /@babel(?:\/|\\{1,2})runtime/,
-          test: /\.(js|mjs|jsx|ts|tsx|css)$/,
-          use: "source-map-loader",
-        },
-      ].filter(Boolean),
+      ],
     },
     plugins: [
       isEnvProduction &&
