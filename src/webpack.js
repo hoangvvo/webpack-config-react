@@ -179,6 +179,26 @@ export const createConfig = async (isEnvProduction, options) => {
       static: { directory: pathPublic },
       historyApiFallback: true,
     },
+    optimization: {
+      splitChunks: isEnvProduction
+        ? {
+            chunks: "all",
+            cacheGroups: {
+              default: false,
+              defaultVendors: false,
+              framework: {
+                chunks: "all",
+                name: "framework",
+                test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+                priority: 40,
+                enforce: true,
+              },
+            },
+          }
+        : undefined,
+      runtimeChunk: { name: "webpack" },
+      minimize: isEnvProduction,
+    },
     entry: pathEntry,
     mode: isEnvProduction ? "production" : "development",
     bail: isEnvProduction,
